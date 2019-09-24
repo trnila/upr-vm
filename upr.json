@@ -15,7 +15,7 @@
       "ssh_username": "student",
       "ssh_password": "{{user `pass`}}",
       "ssh_wait_timeout": "100000s",
-      "shutdown_command": "echo -n '{{user `pass`}}' | sudo -S /sbin/shutdown -h now",
+      "shutdown_command": "echo '{{user `pass`}}' | sudo -S shutdown -P now",
       "output_directory": "output/",
       "format": "ova",
       "guest_additions_mode": "disable",
