@@ -2,6 +2,13 @@
 set -ex
 mkdir -p ~/Desktop
 
+cat <<END | dconf load /
+[org/mate/desktop/peripherals/keyboard/kbd]
+layouts=['us', 'cz']
+options=['grp\tgrp:ctrl_shift_toggle', 'grp\tgrp:win_space_toggle']
+END
+
+
 # install vscode extensions
 /snap/bin/code --install-extension ms-vscode.cpptools
 /snap/bin/code --install-extension vector-of-bool.cmake-tools
