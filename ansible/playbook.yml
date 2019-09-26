@@ -54,7 +54,7 @@
           autologin-user=student
 
     - name: install vscode
-      command: snap install --classic vscode
+      command: snap install --classic code
 
 - hosts: all
   become: yes
