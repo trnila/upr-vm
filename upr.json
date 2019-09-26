@@ -2,15 +2,15 @@
   "variables": {
     "pass": "student"
   },
- "builders": [
+  "builders": [
     {
       "type": "virtualbox-iso",
       "boot_wait": "5s",
       "guest_os_type": "Ubuntu_64",
       "iso_checksum": "7d8e0055d663bffa27c1718685085626cb59346e7626ba3d3f476322271f573e",
       "iso_urls": [
-				"./ubuntu.iso",
-				"http://cz.cdimage.ubuntu.com/ubuntu/releases/bionic/release/ubuntu-18.04.3-server-amd64.iso"
+        "./ubuntu.iso",
+        "http://cz.cdimage.ubuntu.com/ubuntu/releases/bionic/release/ubuntu-18.04.3-server-amd64.iso"
       ],
       "ssh_username": "student",
       "ssh_password": "{{user `pass`}}",
@@ -44,17 +44,13 @@
         "hostname=ubuntu ",
         "initrd=/install/initrd.gz quiet --- <enter>"
       ]
-		}
+    }
   ],
   "provisioners": [
     {
       "type": "shell",
       "execute_command": "echo '{{user `pass`}}' | {{ .Vars }} sudo -E -S sh -c '{{ .Path }}'",
-      "script": "./scripts/setup.sh"
-    },
-    {
-      "type": "shell",
-      "script": "./scripts/setup-student.sh"
+      "script": "scripts/setup-ansible.sh"
     },
     {
       "type": "shell",

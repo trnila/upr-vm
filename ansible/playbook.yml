@@ -1,0 +1,86 @@
+- hosts: all
+  become: yes
+  handlers:
+    - name: reload systemd
+      systemd: daemon_reload=yes
+  tasks:
+    - name: install autoprovisioner
+      copy:
+        dest: /etc/systemd/system/autoprovisioner.service
+        content: |
+          [Service]
+          Type=oneshot
+          WorkingDirectory=/etc/provisioner
+          ExecStart=/usr/bin/git pull
+          ExecStart=/usr/bin/ansible-playbook --connection=local --inventory=127.0.0.1, ansible/playbook.yml
+
+          [Unit]
+          Wants=network-online.target
+          After=network-online.target
+      notify: reload systemd
+
+    - name: enable autoprovisioning
+      systemd: name=autoprovisioner enabled=yes state=stopped
+
+- hosts: all
+  become: yes
+  tasks:
+    - name: install core packages
+      apt:
+        name: "{{ item }}"
+        state: present 
+      with_items:
+        - ubuntu-mate-core
+        - firefox
+        - git
+        - vim
+        - binutils
+        - make
+        - gcc
+        - g++
+        - gdb
+        - cmake
+        - virtualbox-guest-dkms
+        - virtualbox-guest-x11
+        - virtualbox-guest-utils
+        - curl
+
+    - name: enable autologin to desktop
+      copy:
+        dest: /etc/lightdm/lightdm.conf.d/autologin.conf
+        content: |
+          [SeatDefaults]
+          autologin-user=student
+
+    - name: install vscode
+      command: snap install --classic vscode
+
+- hosts: all
+  become: yes
+  become_user: student
+  tasks:
+    - name: set keyboard layouts
+      dconf:
+        key: /org/mate/desktop/peripherals/keyboard/kbd/layouts
+        value: "['us', 'cz']"
+
+    - name: set keyboard switch layout shortcuts
+      dconf:
+        key: /org/mate/desktop/peripherals/keyboard/kbd/options
+        value: "['grp\tgrp:ctrl_shift_toggle', 'grp\tgrp:win_space_toggle']"
+
+    - name: disable screenlock
+      dconf:
+        key: "/org/mate/screensaver/{{ item }}"
+        value: "false"
+      with_items:
+        - idle-activation-enabled
+        - lock-enabled
+
+    - name: install vscode extensions
+      command: "/snap/bin/code --install-extension {{ item }} "
+      with_items:
+        - ms-vscode.cpptools
+        - vector-of-bool.cmake-tools
+
+
