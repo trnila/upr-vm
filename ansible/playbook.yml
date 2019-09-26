@@ -44,6 +44,7 @@
         - virtualbox-guest-x11
         - virtualbox-guest-utils
         - curl
+        - python-psutil
 
     - name: enable autologin to desktop
       copy:
