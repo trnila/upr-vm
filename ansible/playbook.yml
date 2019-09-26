@@ -17,6 +17,9 @@
           [Unit]
           Wants=network-online.target
           After=network-online.target
+
+          [Install]
+          WantedBy=multi-user.target
       notify: reload systemd
 
     - name: enable autoprovisioning
