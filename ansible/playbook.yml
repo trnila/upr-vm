@@ -11,6 +11,7 @@
           [Service]
           Type=oneshot
           WorkingDirectory=/etc/provisioner
+          Environment=HOME=/root
           ExecStart=/usr/bin/git pull
           ExecStart=/usr/bin/ansible-playbook --connection=local --inventory=127.0.0.1, ansible/playbook.yml
 
@@ -23,7 +24,7 @@
       notify: reload systemd
 
     - name: enable autoprovisioning
-      systemd: name=autoprovisioner enabled=yes state=stopped
+      systemd: name=autoprovisioner enabled=yes
 
 - hosts: all
   become: yes
