@@ -2,7 +2,11 @@
 set -ex
 mkdir -p ~/Desktop
 
-cat <<END | dconf load /
+cat <<END | dbus-launch dconf load /
+[org/mate/screensaver]
+idle-activation-enabled=false
+lock-enabled=false 
+
 [org/mate/desktop/peripherals/keyboard/kbd]
 layouts=['us', 'cz']
 options=['grp\tgrp:ctrl_shift_toggle', 'grp\tgrp:win_space_toggle']
