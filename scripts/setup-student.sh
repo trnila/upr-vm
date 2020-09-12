@@ -3,31 +3,23 @@ set -ex
 mkdir -p ~/Desktop
 
 cat <<END | dbus-launch dconf load /
-[org/mate/screensaver]
-idle-activation-enabled=false
-lock-enabled=false 
+[org/gnome/desktop/screensaver]
+lock-enabled=false
 
-[org/mate/desktop/peripherals/keyboard/kbd]
-layouts=['us', 'cz']
-options=['grp\tgrp:ctrl_shift_toggle', 'grp\tgrp:win_space_toggle']
+[org/gnome/desktop/input-sources]
+sources=[('xkb', 'us'), ('xkb', 'cz+qwerty')]
+
+[org/gnome/shell]
+favorite-apps=['firefox.desktop', 'org.gnome.Terminal.desktop', 'code.desktop', 'org.gnome.Nautilus.desktop', 'matrix.desktop', 'kelvin.desktop', 'skripta.desktop']
 END
 
 
 # install vscode extensions
-/snap/bin/code --install-extension ms-vscode.cpptools
-/snap/bin/code --install-extension vector-of-bool.cmake-tools
-
-cat <<END > ~/Desktop/UPR.desktop
-[Desktop Entry]
-Encoding=UTF-8
-Name=UPR
-Type=Link
-URL=https://github.com/geordi/upr-course
-Icon=mate-fs-bookmark
-END
+code --install-extension ms-vscode.cpptools
 
 (
   cd ~/Desktop
-  wget -c https://github.com/geordi/upr-course/raw/master/assets/exercises/templates/exercise_01.zip
-  unzip -o exercise_01.zip
+  wget -c https://github.com/geordi/upr-course/raw/master/assets/exercises/templates/helloworld.zip
+  unzip -o helloworld.zip
+  rm helloworld.zip
 )

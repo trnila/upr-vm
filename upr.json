@@ -7,11 +7,11 @@
       "type": "virtualbox-iso",
       "boot_wait": "5s",
       "guest_os_type": "Ubuntu_64",
-      "iso_checksum": "7d8e0055d663bffa27c1718685085626cb59346e7626ba3d3f476322271f573e",
+      "iso_checksum": "00a9d46306fbe9beb3581853a289490bc231c51f",
       "iso_urls": [
-				"./ubuntu.iso",
-				"http://cz.cdimage.ubuntu.com/ubuntu/releases/bionic/release/ubuntu-18.04.3-server-amd64.iso"
+	"http://cdimage.ubuntu.com/ubuntu-legacy-server/releases/20.04.1/release/ubuntu-20.04.1-legacy-server-amd64.iso"
       ],
+      "headless": true,
       "ssh_username": "student",
       "ssh_password": "{{user `pass`}}",
       "ssh_wait_timeout": "100000s",
@@ -23,8 +23,12 @@
       "vboxmanage": [
         [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
         [ "modifyvm", "{{.Name}}", "--cpus", "2" ],
-        [ "modifyvm", "{{.Name}}", "--vram", "128" ]
+        [ "modifyvm", "{{.Name}}", "--vram", "128" ],
+        [ "modifyvm", "{{.Name}}", "--clipboard-mode", "bidirectional" ],
+        [ "modifyvm", "{{.Name}}", "--draganddrop", "bidirectional" ],
+        [ "modifyvm", "{{.Name}}", "--graphicscontroller", "vboxsvga" ]
       ],
+      "disk_size": 102400,
       "http_directory": "./http",
       "boot_command": [
         "<esc><f6><esc>",
@@ -55,6 +59,11 @@
     {
       "type": "shell",
       "script": "./scripts/setup-student.sh"
+    },
+    {
+      "type": "file",
+      "source": "./home/",
+      "destination": "/home/student/"
     },
     {
       "type": "shell",

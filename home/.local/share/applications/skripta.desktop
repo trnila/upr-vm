@@ -1,0 +1,6 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Skripta
+Type=Application
+Exec=/usr/bin/firefox https://mrlvsb.github.io/upr-skripta/
+Icon=/home/student/.local/share/icons/skripta.svg

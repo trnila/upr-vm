@@ -1,0 +1,6 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Matrix
+Type=Application
+Exec=/usr/bin/firefox https://matrix.cs.vsb.cz
+Icon=/home/student/.local/share/icons/matrix.svg

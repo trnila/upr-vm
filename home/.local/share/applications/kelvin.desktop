@@ -1,0 +1,6 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Kelvin
+Type=Application
+Exec=/usr/bin/firefox https://kelvin.cs.vsb.cz
+Icon=/home/student/.local/share/icons/kelvin.svg
